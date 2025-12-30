@@ -17,8 +17,10 @@ const PuedoComprar = ({ step, res }: Props) => {
 
     return(
         <div className="order-2 md:order-1 md:pr-6">
-          <div className="rounded-2xl overflow-hidden shadow-lg bg-gradient-to-br from-indigo-50 via-white to-sky-50 p-4">
-            <div className="flex items-center justify-between gap-4">
+          <div className="rounded-2xl overflow-hidden shadow-lg bg-gradient-to-br from-indigo-50 via-white to-sky-50 p-4 relative">
+            <Image src={step === 1 ? "/images/flat1.jpg" : step === 2 ? "/images/inside_house1.jpg" : step === 3 ? "/images/inside_house2.jpg" : "/images/house1.jpg"} alt="background" fill className="absolute inset-0 object-cover opacity-8 blur-sm" />
+            <div className="relative z-10">
+              <div className="flex items-center justify-between gap-4">
               <div>
                 <h2 className="text-lg font-bold text-gray-900">¿Puedo comprar esta vivienda?</h2>
                 <p className="mt-1 text-sm text-gray-600">Antes de enamorarte de una casa, comprueba si es viable.</p>
@@ -56,7 +58,8 @@ const PuedoComprar = ({ step, res }: Props) => {
                 <div className="mt-6 text-sm text-gray-500">Continúa con los controles de la derecha para avanzar.</div>
               </div>
 
-              <div className="mt-4 rounded-lg overflow-hidden">
+                <div className="mt-4 rounded-lg overflow-hidden relative">
+                <div className="absolute top-3 left-3 z-20 inline-flex items-center gap-2 rounded-full bg-white/80 px-3 py-1 text-xs font-medium text-gray-800">Paso {step}</div>
                 <Image src={step === 1 ? "/images/house1.jpg" : step === 2 ? "/images/inside_house1.jpg" : step === 3 ? "/images/inside_house2.jpg" : "/images/flat1.jpg"} alt="Imagen" width={1000} height={400} className="w-full h-36 object-cover rounded-lg transition-opacity duration-300" />
               </div>
           </div>

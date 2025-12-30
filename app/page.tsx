@@ -10,7 +10,7 @@ import { useState } from "react";
   }
 
 export default function Home() {
-  const [step, setStep] = useState<number>(4);
+  const [step, setStep] = useState<number>(1);
   const [precio, setPrecio] = useState<string>("");
   const [ingresos, setIngresos] = useState<string>("");
   const [deudas, setDeudas] = useState<string>("");
@@ -141,6 +141,21 @@ export default function Home() {
             </div>
 
             <div className="mt-4">
+              <div className="rounded-lg overflow-hidden relative mb-5">
+                <Image
+                  src={step === 1 ? "/images/house1.jpg" : step === 2 ? "/images/inside_house1.jpg" : step === 3 ? "/images/inside_house2.jpg" : "/images/houseF.jpg"}
+                  alt="Banner"
+                  width={1000}
+                  height={300}
+                  className="w-full h-36 object-cover rounded-lg transition-all duration-300"
+                />
+                <div className="absolute inset-0 rounded-lg bg-gradient-to-t from-black/40 to-transparent" />
+                <div className="absolute left-4 bottom-3 text-white">
+                  <div className="text font-semibold drop-shadow">{step === 1 ? 'Accede a la vivienda de tus sueños' : step === 2 ? 'Tus ingresos' : step === 3 ? 'Deudas y ahorros' : 'Resumen final'}</div>
+                  <div className="text-xs opacity-90 drop-shadow">{step === 1 ? 'Encuentra tu hipoteca ideal' : step === 2 ? 'Añade tus ingresos netos' : step === 3 ? 'Introduce tus deudas y ahorros' : 'Resultado y consejos'}</div>
+                </div>
+              </div>
+
               {step === 1 && (
                 <label className="block">
                   <div className="flex items-center justify-between">
