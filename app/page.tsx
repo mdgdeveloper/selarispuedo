@@ -3,7 +3,7 @@
 import { BanknoteArrowDown, BanknoteArrowUp, Check, HouseHeart, PiggyBank, TriangleAlert, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
  export const formatoMoneda = (v: number) => {
     return v.toLocaleString("es-ES", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
@@ -16,6 +16,17 @@ export default function Home() {
   const [deudas, setDeudas] = useState<string>("");
   const [ahorros, setAhorros] = useState<string>("");
   const [mostrarConsejos, setMostrarConsejos] = useState(false);
+
+  // Detect mobile (client-side)
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
+  useEffect(() => {
+    function check() {
+      setIsMobile(window.innerWidth <= 768);
+    }
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   function parseNumber(v: string) {
     const n = parseFloat(v.replace(/[^0-9.-]+/g, ""));
@@ -112,6 +123,22 @@ export default function Home() {
     setStep(1);
     setMostrarConsejos(false);
   }
+
+  // If we already know the device is desktop, show the message
+  if (isMobile === false) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
+        <div className="max-w-md w-full rounded-xl bg-white p-6 shadow text-center">
+          <Image src="/images/logo.svg" alt="Selaris" width={48} height={48} className="mx-auto" />
+          <h1 className="mt-4 text-lg font-semibold text-gray-900">Esta página solo puede ser accedida a través de teléfonos móviles</h1>
+          <p className="mt-2 text-sm text-gray-600">Accede desde tu teléfono para usar la calculadora en su formato óptimo.</p>
+        </div>
+      </div>
+    );
+  }
+
+  // While we are detecting (SSR -> client), render nothing to avoid flicker
+  if (isMobile === null) return null;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white via-gray-50 to-gray-100 py-10 px-4 sm:px-6 lg:px-8 font-sans">
